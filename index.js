@@ -1,8 +1,9 @@
-var cool = require('cool-ascii-faces');
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io').listen(http);
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 3333));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -10,19 +11,21 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/', function(request, response) {
-  var result = ''
-  var times = process.env.TIMES || 5
-  for (i=0; i < times; i++)
-    result += cool();
-  response.send(result);
+app.get('/', function(req, res){
+  res.render('pages/index');
 });
 
-app.get('/cool', function(request, response) {
-  response.send(cool());
+io.on('connection', function(socket) {
+  console.log('A user connected');
+
+  // Disconnect listener
+  socket.on('disconnect', function() {
+      console.log('A user disconnected');
+  });
 });
 
-app.listen(app.get('port'), function() {
+
+http.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
