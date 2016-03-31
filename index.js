@@ -9,14 +9,19 @@ app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
+  res.set('url', req.url);
   res.render('pages/index');
 });
 
 io.on('connection', function(socket) {
   console.log('A user connected');
+
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+  });
 
   // Disconnect listener
   socket.on('disconnect', function() {
