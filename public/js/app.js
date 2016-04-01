@@ -29,6 +29,7 @@
   // User Connection Event
   socket.on('user connection', function(msg) {
     $('.info').append($('<p>').text('There are ' + msg.clientCount + ' players.'));
+    console.log(msg);
     storage.setItem('mp-userCount', msg.clientCount);
     setUI();
   });
@@ -88,10 +89,11 @@
       if (storage.getItem('mp-id') && storage.getItem('mp-userCount') <= 2) {
         $('.screen-main').addClass('on');
         $('.state.not-enough-players').show();
+        $('.screen.game-board').removeClass('on');
       } else {
         $('.state.not-enough-players').hide();
         $('.screen-main').removeClass('on');
-        $('.screen.game-board').addClass('on');      
+        $('.screen.game-board').addClass('on');    
       }
 
     }

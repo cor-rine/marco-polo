@@ -6,6 +6,7 @@ var _ = require('underscore');
 
 
 var registeredUsers = {};
+var haveMarco = false;
 
 app.set('port', (process.env.PORT || 3333));
 
@@ -29,11 +30,17 @@ app.get('/reset', function(req, res){
   });
 });
 
+function chooseMarco() {
+  console.log('choosing Marco');
+
+  if (!haveMarco) {
+
+  } else {
+
+  }
+}
+
 io.on('connection', function(socket) {
-  // socket.on('send message', function(msg){
-  //   console.log(msg);
-  //   io.emit('receive message', msg);
-  // });
 
   // Connection listener
   socket.on('connect user', function(msg) {
@@ -41,20 +48,23 @@ io.on('connection', function(socket) {
 
     var user = { 
       "id" : msg.from,
-      "name" : msg.displayName
+      "name" : msg.displayName,
     };
     registeredUsers[msg.from] = user;
 
     console.log("registeredUsers Size: " + _.size(registeredUsers));
     for (user in registeredUsers) {
       console.log(registeredUsers[user].name);
-      console.log('has User: ' + user + ' >> ' + io.sockets.clients().connected);
+    }
+
+    // Start game
+    if (_.size(registeredUsers) >=3) {
+      chooseMarco();
     }
 
     // registeredUsers[msg.]
     io.emit('user connection', {
-      'clientCount': _.size(registeredUsers),
-      'reason': 'connection'
+      'clientCount': _.size(registeredUsers)
     });
   })
 
@@ -71,12 +81,10 @@ io.on('connection', function(socket) {
     console.log("registeredUsers Size: " + _.size(registeredUsers));
     for (user in registeredUsers) {
       console.log(registeredUsers[user].name);
-      console.log('has User: ' + user + ' >> ' + io.sockets.clients().connected);
     }
 
     io.emit('user connection', {
-      'clientCount': _.size(registeredUsers),
-      'reason': 'connection'
+      'clientCount': _.size(registeredUsers)
     });
   })
 
