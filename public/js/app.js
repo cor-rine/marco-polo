@@ -34,10 +34,15 @@
   });
 
   // User Disconnected Event
-  socket.on('disconnect user', function(msg) {
-    $('.info').append($('<p>').text('There are ' + msg.clientCount + ' players.'));
-    storage.setItem('mp-userCount', msg.clientCount);
-    gameOver();
+  socket.on('user disconnected', function(msg) {
+    if (!!storage.getItem('mp-name')) {
+      console.log('user disconnected');
+      socket.emit('role call', {
+        'from': storage.getItem('mp-id'),
+        'displayName': storage.getItem('mp-name')
+      });
+    }
+    setUI();
   });
 
 
@@ -79,16 +84,16 @@
       $('.state.intro').show();
     } else {
       // Starting the game
-    }
+      // Find out if there are enough users
+      if (storage.getItem('mp-id') && storage.getItem('mp-userCount') <= 2) {
+        $('.screen-main').addClass('on');
+        $('.state.not-enough-players').show();
+      } else {
+        $('.state.not-enough-players').hide();
+        $('.screen-main').removeClass('on');
+        $('.screen.game-board').addClass('on');      
+      }
 
-    // Find out if there are enough users
-    if (storage.getItem('mp-id') && storage.getItem('mp-userCount') <=2) {
-      $('.screen-main').addClass('on');
-      $('.state.not-enough-players').show();
-    } else {
-      $('.state.not-enough-players').hide();
-      $('.screen-main').removeClass('on');
-      $('.screen.game-board').addClass('on');
     }
 
   }
