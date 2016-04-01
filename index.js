@@ -93,15 +93,12 @@ io.on('connection', function(socket) {
 
   // Touchstart
   socket.on('touchstart', function(msg) {
-
     io.emit('drawuser', msg);
   });
 
   // Touchmove
   socket.on('touchmove', function(msg) {
-    io.emit('drawboard', {
-      msg
-    });
+    io.emit('drawboard', msg);
   });
 
   // Touchend
