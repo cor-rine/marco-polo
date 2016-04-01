@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    include ../partials/header.jade
+
+  body
+
+    .reset
+      h2 Your data is clear
+
+      a(href="/") Return to Marco Polo
+
+    script(type="text/javascript", src="/js/jquery.js")
+    script(type="text/javascript").
+      localStorage.clear();

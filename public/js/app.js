@@ -15,9 +15,16 @@
     if (storage.getItem('mp-name')) {
       $('#nameform').remove();
     }
+    socket.emit('connect user', {'from': storage.getItem('mp-id'), 'displayName': storage.getItem('mp-name') });
   }
 
-  socket.on('chat message', function(msg){
+
+  socket.on('user connection', function(msg) {
+    $('.info').append($('<p>').text('There are ' + msg.clientCount + ' players.'));
+  });
+
+
+  socket.on('receive message', function(msg){
     var display;
     if (msg.from == storage.getItem('mp-id')) {
       display = "Me: ";
@@ -28,6 +35,7 @@
     $('#messages').append($('<li>').text(display));
   });
 
+
   $('#nameform').submit(function(){
     console.log($('#name').val());
     storage.setItem('mp-name', $('#name').val());
@@ -36,7 +44,7 @@
   });
 
   $('#message').submit(function(){
-    socket.emit('chat message', { 'message':$('#m').val(), 'from': storage.getItem('mp-id'), 'displayName': storage.getItem('mp-name') });
+    socket.emit('send message', { 'message':$('#m').val(), 'from': storage.getItem('mp-id'), 'displayName': storage.getItem('mp-name') });
     $('#m').val('');
     return false;
   });

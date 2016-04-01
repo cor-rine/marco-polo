@@ -11,21 +11,25 @@ html
 
   body
 
-    div.
+    div.info
+    
+    div.screen.screen-intro
+      //- 
 
-    div.screen.screen1
-
+    div.screen.screen-name-entry
+      form#nameform
+        input#name(autocomplete="off", placeholder="What is your name?")
+        button Submit
 
     div.screen.screen2
 
 
     div.screen.screen3
 
+
     ul#messages
 
-    form#nameform
-      input#name(autocomplete="off", placeholder="What is your name?")
-      button Send
+    
     form#message
       input#m(autocomplete="off")
       button Send

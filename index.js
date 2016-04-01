@@ -13,22 +13,42 @@ app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
   res.render('pages/index', {
-    "host": req.host,
-    "port": app.get('port')
+    'host': req.host,
+    'port': app.get('port')
+  });
+});
+
+app.get('/reset', function(req, res){
+  res.render('pages/reset', {
+    'host': req.host,
+    'port': app.get('port')
   });
 });
 
 io.on('connection', function(socket) {
-  console.log('A user connected');
 
-  socket.on('chat message', function(msg){
+
+  socket.on('send message', function(msg){
     console.log(msg);
-    io.emit('chat message', msg);
+    io.emit('receive message', msg);
   });
+
+  // Connection listener
+  socket.on('connect user', function(msg) {
+    console.log('user connected');
+    io.emit('user connection', {
+      'clientCount': socket.server.engine.clientsCount,
+      'reason': 'connection'
+    });
+  })
 
   // Disconnect listener
   socket.on('disconnect', function() {
-      console.log('A user disconnected');
+    console.log('A user disconnected');
+    io.emit('user connection', {
+      'clientCount': socket.server.engine.clientsCount,
+      'reason': 'disconnected'
+    });
   });
 });
 
