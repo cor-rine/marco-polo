@@ -3,6 +3,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
 
+var registeredUsers = 0;
+
 app.set('port', (process.env.PORT || 3333));
 
 app.use(express.static(__dirname + '/public'));
@@ -26,27 +28,29 @@ app.get('/reset', function(req, res){
 });
 
 io.on('connection', function(socket) {
-
-
-  socket.on('send message', function(msg){
-    console.log(msg);
-    io.emit('receive message', msg);
-  });
+  // socket.on('send message', function(msg){
+  //   console.log(msg);
+  //   io.emit('receive message', msg);
+  // });
 
   // Connection listener
   socket.on('connect user', function(msg) {
-    console.log('user connected');
+    console.log('A registered user connected');
+    registeredUsers++;
     io.emit('user connection', {
-      'clientCount': socket.server.engine.clientsCount,
+      'clientCount': registeredUsers,
       'reason': 'connection'
     });
   })
 
   // Disconnect listener
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function(msg) {
     console.log('A user disconnected');
-    io.emit('user connection', {
-      'clientCount': socket.server.engine.clientsCount,
+    registeredUsers = (registeredUsers >= 1) ? registeredUsers-1 : 0;
+    console.log(socket.server.engine.clientsCount);
+    // console.log(socket.server.engine.clients);
+    io.emit('disconnected', {
+      'clientCount': registeredUsers,
       'reason': 'disconnected'
     });
   });

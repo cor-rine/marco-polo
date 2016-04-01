@@ -13,26 +13,37 @@ html
 
     div.info
     
-    div.screen.screen-intro
-      //- 
+    div.screen.screen-main
 
-    div.screen.screen-name-entry
-      form#nameform
-        input#name(autocomplete="off", placeholder="What is your name?")
-        button Submit
+      h1 Marco Polo Logo
 
-    div.screen.screen2
+      .state.intro
+        p Hunt or be hunted in a game of strategy and wit
+        button.start Let's do it
+
+      .state.name-entry
+        p What is your name?
+        form#nameform
+          input#name(autocomplete="off", placeholder="What is your name?")
+          button Submit
+
+      .state.not-enough-players
+        p We need at least 3 people to play the game, go get some friends.
+        p Waiting
+      
+
+    div.screen.game-board
+
+      h1 This is the game board
 
 
     div.screen.screen3
 
 
-    ul#messages
-
-    
-    form#message
-      input#m(autocomplete="off")
-      button Send
+    //- ul#messages
+    //- form#message
+    //-   input#m(autocomplete="off")
+    //-   button Send
 
     script(type="text/javascript", src="/js/jquery.js")
     script(type="text/javascript", src="/socket.io/socket.io.js")

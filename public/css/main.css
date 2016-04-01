@@ -1,3 +1,31 @@
 html, div, body {
   margin: 0;
   padding: 0; }
+
+.info {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: right; }
+
+.screen {
+  margin: 0;
+  display: none;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+              -ms-grid-row-align: center;
+          align-items: center;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center; }
+  .screen.on {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+
+.state {
+  display: none; }
