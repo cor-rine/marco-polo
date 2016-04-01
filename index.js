@@ -12,15 +12,18 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
-  res.set('url', req.url);
-  res.render('pages/index');
+  res.render('pages/index', {
+    "host": req.host,
+    "port": app.get('port')
+  });
 });
 
 io.on('connection', function(socket) {
   console.log('A user connected');
 
   socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
+    console.log(msg);
+    io.emit('chat message', msg);
   });
 
   // Disconnect listener

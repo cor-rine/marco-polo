@@ -3,26 +3,33 @@ html
   head
     include ../partials/header.jade
 
+    script(type="text/javascript").     
+      var CONFIG = {
+          "host": "#{host}",
+          "port": "#{port}"
+        };
+
   body
-    p #{url}
+
+    div.
+
+    div.screen.screen1
+
+
+    div.screen.screen2
+
+
+    div.screen.screen3
 
     ul#messages
-    form
+
+    form#nameform
+      input#name(autocomplete="off", placeholder="What is your name?")
+      button Send
+    form#message
       input#m(autocomplete="off")
       button Send
 
     script(type="text/javascript", src="http://code.jquery.com/jquery-1.11.1.js")
     script(type="text/javascript", src="/socket.io/socket.io.js")
-    script(type="text/javascript").
-      var socket = io.connect('localhost:3333', {reconnect: true});
-      console.log(socket);
-
-      socket.on('connect', function(socket) {
-        console.log('Connected!');
-      });
-
-      $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-      });
+    script(type="text/javascript", src="/js/app.js")
