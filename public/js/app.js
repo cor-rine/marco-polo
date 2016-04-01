@@ -1,6 +1,6 @@
 (function app() {
 
-  var socket = io.connect(CONFIG.host + ":" + CONFIG.port, {reconnect: true});
+  var socket = io.connect("//" + CONFIG.host + ":" + CONFIG.port, {reconnect: true});
   var storage = localStorage;
   
   console.log(socket);
