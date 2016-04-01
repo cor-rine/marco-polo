@@ -64,9 +64,10 @@ io.on('connection', function(socket) {
 
     // registeredUsers[msg.]
     io.emit('user connection', {
-      'clientCount': _.size(registeredUsers)
+      'clientCount': _.size(registeredUsers),
+      'users': registeredUsers
     });
-  })
+  });
 
   // Role Call listener
   // When a user disconnected, want to re-create the registeredUserList
@@ -84,9 +85,29 @@ io.on('connection', function(socket) {
     }
 
     io.emit('user connection', {
-      'clientCount': _.size(registeredUsers)
+      'clientCount': _.size(registeredUsers), 
+      'users': registeredUsers
     });
-  })
+  });
+
+
+  // Touchstart
+  socket.on('touchstart', function(msg) {
+
+    io.emit('drawuser', msg);
+  });
+
+  // Touchmove
+  socket.on('touchmove', function(msg) {
+    io.emit('drawboard', {
+      msg
+    });
+  });
+
+  // Touchend
+  socket.on('touchend', function(msg) {
+    io.emit('removeuser', msg);
+  });
 
   // Disconnect listener
   socket.on('disconnect', function(msg) {

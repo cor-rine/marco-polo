@@ -28,13 +28,43 @@ html
           button Submit
 
       .state.not-enough-players
-        p We need at least 3 people to play the game, go get some friends.
+        p We need at least 2 people to play the game, go get some friends.
         p Waiting
       
 
     div.screen.game-board
 
       h1 This is the game board
+
+      p When you're ready to play, just touch the board below.
+      
+      ul#users
+
+      div.board
+
+        div.row
+          div.square
+          div.square
+          div.square
+          div.square
+
+        div.row
+          div.square
+          div.square
+          div.square
+          div.square
+
+        div.row
+          div.square
+          div.square
+          div.square
+          div.square
+
+        div.row
+          div.square
+          div.square
+          div.square
+          div.square
 
 
     div.screen.screen3
@@ -46,5 +76,6 @@ html
     //-   button Send
 
     script(type="text/javascript", src="/js/jquery.js")
+    script(type="text/javascript", src="/js/underscore.js")
     script(type="text/javascript", src="/socket.io/socket.io.js")
     script(type="text/javascript", src="/js/app.js")

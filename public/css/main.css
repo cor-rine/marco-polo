@@ -23,9 +23,25 @@ html, div, body {
           flex-direction: column;
   text-align: center; }
   .screen.on {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex; }
+    display: block; }
 
 .state {
   display: none; }
+
+.board {
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+  .board .square {
+    background: #ccc;
+    width: 40px;
+    height: 40px;
+    margin: 10px; }
+  .board .dot {
+    background: red;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    position: absolute; }
